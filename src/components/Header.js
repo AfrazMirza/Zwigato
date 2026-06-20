@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { MaterialCommunityIcons, Ionicons, Feather } from '@expo/vector-icons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { useRouter } from 'expo-router';
 import { useShop } from '../context/ShopContext';
 import { COLORS } from '../constants/colors';
 import { BaseFonts } from '../constants/BaseFonts';
+const AppIcon = require('../../assets/zwigato.jpg');
 
 const { width } = Dimensions.get('window');
 
@@ -22,12 +23,16 @@ const Header = ({ title, showBack = false, ShowWishlist = true, ShowCart = true 
             <TouchableOpacity onPress={() => router.back()} style={styles.iconBtn}>
               <Ionicons name="arrow-back" size={24} color={COLORS.iconColor} />
             </TouchableOpacity>
-          ) : null
-          // (
-            // <TouchableOpacity style={styles.iconBtn}>
-            //   <Feather name="menu" size={24} color={COLORS.iconColor} />
-            // </TouchableOpacity>
-          // )
+          ) : (
+    /* This replaces the 'null' part */
+    <View style={styles.appIconContainer}>
+      <Image
+        source={AppIcon} 
+        style={styles.headerAppIcon} 
+        resizeMode="contain"
+      />
+    </View>
+  )
           }
           <Text style={styles.logoText}>{title || 'Myntra'}</Text>
         </View>
@@ -79,12 +84,21 @@ const styles = StyleSheet.create({
     // shadowRadius: 2,
 
   },
-  leftRow: { flexDirection: 'row', alignItems: 'center' },
+  leftRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+  appIconContainer: {
+    paddingLeft: 5,
+    // marginRight: ,
+  },
+  headerAppIcon: {
+    width: 32,  // Adjust size as needed
+    height: 32,
+    // borderRadius: 6, // Optional: gives it a slightly rounded look
+  },
   logoText: {
     fontSize: 16,
     fontFamily: BaseFonts.bold,
     color: COLORS.iconColor,
-    marginLeft: 10,
+    marginLeft: 5,
     letterSpacing: 0.5
   },
   rightRow: { flexDirection: 'row', alignItems: 'center' },

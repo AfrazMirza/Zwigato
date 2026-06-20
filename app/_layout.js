@@ -3,6 +3,7 @@ import { ShopProvider } from '../src/context/ShopContext';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import "../global.css";
 /**
  * RootLayout: The entry point for Expo Router.
  * Wraps everything in ShopProvider so global state works.
@@ -35,22 +36,24 @@ export default function RootLayout() {
   return (
     <ShopProvider>
       <Stack
+        initialRouteName="onboarding"
         screenOptions={{
           headerShown: false,
         }}
       >
-        {/* 'index' corresponds to app/index.js */}
-        <Stack.Screen 
-          name="index" 
-          options={{ title: 'Zwigato Shop' }} 
-        />
-        
-        {/* This will be our dynamic product page */}
-        <Stack.Screen 
-          name="details/[id]" 
-          options={{ title: 'Product Details' }} 
-         
-        />
+        {/* Onboarding should appear first after the splash screen */}
+        <Stack.Screen name="onboarding" options={{ title: 'Welcome' }} />
+
+        {/* Auth group/folder screens */}
+        <Stack.Screen name="auth/SignIn" />
+        <Stack.Screen name="auth/SignUp" />
+        <Stack.Screen name="auth/Verification" />
+        <Stack.Screen name="auth/forgetPassword" />
+        <Stack.Screen name="auth/PersonalDetails" />
+
+        {/* Main App Screens */}
+        <Stack.Screen name="index" options={{ title: 'Zwigato Shop' }} />
+        <Stack.Screen name="details/[id]" options={{ title: 'Product Details' }} />
       </Stack>
     </ShopProvider>
   );
