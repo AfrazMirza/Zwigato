@@ -1,21 +1,45 @@
 import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useShop } from '../src/context/ShopContext';
-import Header from '../src/components/Header';
-import { wishlistStyles as styles } from '../assets/styles/wishlistStyle';
+import { useShop } from '../../../src/context/ShopContext';
+import Header from '../../../src/components/common/Header';
+import { wishlistStyles as styles } from '../../../assets/styles/wishlistStyle';
 import { useRouter } from 'expo-router';
-import { BaseFonts } from '../src/constants/BaseFonts';
+import { BaseFonts } from '../../../src/constants/BaseFonts';
 
 export default function WishlistScreen() {
   const { favorites, toggleFavorite, addToCart, removedItem, showSnackbar, undoRemoveFromWishlist } = useShop();
   const router = useRouter();
-  const handleMoveToBag = (item) => {
+  type WishlistProduct = {
+    id: number;
+    title: string;
+    brand?: string;
+    price: number;
+    thumbnail?: string;
+    rating?: number;
+    reviews?: { length: number }[];
+  };
+
+  const handleMoveToBag = async (item: WishlistProduct) => {
+    const userToken = await AsyncStorage.getItem('userToken');
+    if (!userToken) {
+      Alert.alert(
+        'Login Required',
+        'Please sign in to move items to your bag.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Login', onPress: () => router.push('/signIn') },
+        ]
+      );
+      return;
+    }
+
     addToCart(item); // Bag mein add karo
     toggleFavorite(item); // Wishlist se remove karo
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: WishlistProduct }) => (
     <View style={styles.card}>
         <TouchableOpacity onPress={() =>  {console.log("clicked", item.id); router.navigate(`/details/${item.id}`);}}>
       <View style={styles.imageContainer}>

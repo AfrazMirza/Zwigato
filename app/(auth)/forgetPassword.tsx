@@ -1,4 +1,4 @@
-import SecondHeader from "../Common/SecondHeader";
+import SecondHeader from "../../src/Common/SecondHeader";
 import Button from "@/components/controls/Button";
 import Text from "@/skeleton/Text";
 import { zodResolver } from "@hookform/resolvers/zod";

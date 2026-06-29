@@ -224,22 +224,22 @@ const slides = [
   {
     title: "Discover Latest Trends",
     subtitle: "Explore thousands of premium products, fashion apparel, and electronics tailored just for your style.",
-    image: require("../../assets/Onboarding1.jpeg"),
+    image: require("../assets/Onboarding1.jpeg"),
   },
   {
     title: "Exclusive Deals & Offers",
     subtitle: "Unlock massive discounts, flash sales, and personalized promo codes on top-tier global brands.",
-    image: require("../../assets/Onboarding2.jpeg"),
+    image: require("../assets/Onboarding2.jpeg"),
   },
   {
     title: "Seamless & Secure Checkout",
     subtitle: "Experience lightning-fast payments via secure UPI, cards, or NetBanking with zero hassle.",
-    image: require("../../assets/Onboarding3.jpeg"),
+    image: require("../assets/Onboarding3.jpeg"),
   },
   {
     title: "Fast Delivery to Your Doorstep",
     subtitle: "Track your orders in real-time with our reliable, lightning-fast shipping and easy return policies.",
-    image: require("../../assets/Onboarding4.jpeg"),
+    image: require("../assets/Onboarding4.jpeg"),
   },
 ];
 
@@ -252,13 +252,15 @@ export default function Onboarding() {
       setCurrentSlide((prev) => prev + 1);
     } else {
       await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
-      router.push("/auth/SignUp");
+      // router.push("/signUp");
+      router.push('/authPortal');
     }
   };
 
   const handleSkip = async () => {
     await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
-    router.push("/auth/SignUp");
+    // router.push("/signUp");
+    router.push('/authPortal');
   };
 
   const { title, subtitle, image } = slides[currentSlide];

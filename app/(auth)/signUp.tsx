@@ -59,7 +59,7 @@ const SignUp = () => {
     try {
       console.log("SignUp data:", data);
       reset();
-      router.push("/auth/Verification");
+      router.push("/verification");
     } catch (error: any) {
       console.log("Email Error:-", error);
       setError("email", {
@@ -193,7 +193,7 @@ const SignUp = () => {
                 <Text style={styles.footerText}>
                   Already have an account?
                 </Text>
-                <TouchableOpacity onPress={() => router.push("/auth/SignIn")}>
+                <TouchableOpacity onPress={() => router.push("/signIn")}>
                   <Text style={styles.loginLink}> Login</Text>
                 </TouchableOpacity>
               </View>

@@ -41,7 +41,7 @@ const Welcome = () => {
     try {
       console.log("SignIn data:", data);
       reset();
-      router.push("/auth/Verification");
+      router.push("/(main)/(tabs)");
     } catch (error: any) {
       console.log("error: ", error);
       setError("email", {
@@ -105,7 +105,7 @@ const Welcome = () => {
                     type="checkbox"
                   />
                 </View>
-                <TouchableOpacity onPress={() => router.push("/auth/forgetPassword")}>
+                <TouchableOpacity onPress={() => router.push("/forgetPassword")}>
                   <Text style={styles.forgotPasswordText}>
                     Forgot password?
                   </Text>
@@ -143,7 +143,7 @@ const Welcome = () => {
             <Text style={styles.footerText}>
               Don&apos;t have an account?
             </Text>
-            <TouchableOpacity onPress={() => router.push("/auth/SignUp")}>
+            <TouchableOpacity onPress={() => router.push("/signUp")}>
               <Text style={styles.signUpLink}> Sign Up</Text>
             </TouchableOpacity>
           </View>

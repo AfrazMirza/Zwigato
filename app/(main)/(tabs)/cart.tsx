@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { useShop } from '../src/context/ShopContext';
-import Header from '../src/components/Header';
-import CartItem from '../src/components/CartItem';
-import { COLORS } from '../src/constants/colors';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useShop } from '../../../src/context/ShopContext';
+import Header from '../../../src/components/common/Header';
+import CartItem from '../../../src/components/modules/cart/CartItem';
+import { COLORS } from '../../../src/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import RemoveItemModal from '../src/components/RemoveItemModal';    
-import { BaseFonts } from '../src/constants/BaseFonts';
+import RemoveItemModal from '../../../src/components/modules/cart/RemoveItemModal';    
+import { BaseFonts } from '../../../src/constants/BaseFonts';
 
 export default function CartScreen() {
   const { cart, removeFromCart, selectedIds, toggleSelection, toggleAll, toggleFavorite } = useShop();
@@ -61,6 +62,34 @@ const payableAmount = finalAmount + platformFee;
       setSelectedItemForModal(null);
     }
   };
+
+  const handlePlaceOrder = async () => {
+    const userToken = await AsyncStorage.getItem('userToken');
+    if (!userToken) {
+      Alert.alert(
+        'Login Required',
+        'Please sign in to place your order.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Login', onPress: () => router.push('/signIn') },
+        ]
+      );
+      return;
+    }
+
+    router.push('/checkout');
+  };
+
+  // // ── TRIGGER HANDLER FOR MULTI-STEP CHECKOUT SCREEN ──
+  // const handlePlaceOrder = () => {
+  //   if (cart.length === 0) {
+  //     alert("Bhai aapka cart khali hai!");
+  //     return;
+  //   }
+    
+  //   // Smoothly routes the dynamic context path directly to app/checkout.tsx
+  //   router.push('/checkout');
+  // };
 
   const PriceDetails = () => {
   if (selectedItems.length === 0) return null;
@@ -166,7 +195,7 @@ const payableAmount = finalAmount + platformFee;
 
       {cart.length === 0 ? null : (
   <View style={styles.footer}>
-    <TouchableOpacity style={styles.placeOrderBtn}>
+    <TouchableOpacity style={styles.placeOrderBtn} onPress={handlePlaceOrder} activeOpacity={0.85}>
       <Text style={styles.orderText}>PLACE ORDER</Text>
     </TouchableOpacity>
   </View>

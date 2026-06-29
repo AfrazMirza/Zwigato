@@ -76,7 +76,7 @@
 import Text from "@/skeleton/Text";
 import React from "react";
 import { GestureResponderEvent, TouchableOpacity, StyleSheet } from "react-native";
-import PulseLoader from "../UI/PulseLoader";
+import PulseLoader from "../ui/PulseLoader";
 
 type ButtonProps = {
   variant?: "primary" | "secondary" | "disabled";

@@ -144,7 +144,7 @@ const PersonalDetails = () => {
   const handleNationalAddress = async (data: any) => {
     console.log("Address details:", data);
     // setStep(2);
-    router.replace("/");
+    router.replace("/(main)/(tabs)");
   };
 
   const pickLicenceDoc = async () => {

@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFE450"
     },
     "ios": {
       "supportsTablet": true
@@ -42,6 +42,7 @@
       "eas": {
         "projectId": "0ed4ca1c-5dde-4f4a-900a-e2a933f1fc9d"
       }
-    }
+    },
+    "owner": "afrazmirza"
   }
 }

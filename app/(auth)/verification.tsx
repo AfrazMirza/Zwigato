@@ -184,7 +184,7 @@ const Verification = () => {
               <View style={styles.successBtnWrap}>
                 <Button
                   variant="primary"
-                  onPress={() => router.push("/auth/PersonalDetails")}
+                  onPress={() => router.push("/personalDetails")}
                 >
                   <Text variant="semibold" style={styles.btnTextPrimary}>Continue</Text>
                 </Button>

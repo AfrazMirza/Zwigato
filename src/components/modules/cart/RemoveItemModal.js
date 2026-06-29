@@ -58,8 +58,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS } from '../constants/colors';
-import { BaseFonts } from '../constants/BaseFonts';
+import { COLORS } from '../../../constants/colors';
+import { BaseFonts } from '../../../constants/BaseFonts';
 
 const RemoveItemModal = ({ visible, onClose, item, onRemove, onMoveToWishlist }) => {
   if (!item) return null;

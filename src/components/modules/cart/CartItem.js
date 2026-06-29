@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons, Ionicons, Octicons } from '@expo/vector-icons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
-import { COLORS } from '../constants/colors';
-import { BaseFonts } from '../../src/constants/BaseFonts';
+import { COLORS } from '../../../constants/colors';
+import { BaseFonts } from '../../../constants/BaseFonts';
 import { useRouter } from 'expo-router';
 
 const CartItem = ({ item, isSelected, onToggle, onRemove }) => {

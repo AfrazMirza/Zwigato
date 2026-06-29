@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'rea
 import { MaterialCommunityIcons, Ionicons, Feather } from '@expo/vector-icons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { useRouter } from 'expo-router';
-import { useShop } from '../context/ShopContext';
-import { COLORS } from '../constants/colors';
-import { BaseFonts } from '../constants/BaseFonts';
-const AppIcon = require('../../assets/zwigato.jpg');
+import { useShop } from '../../context/ShopContext';
+import { COLORS } from '../../constants/colors';
+import { BaseFonts } from '../../constants/BaseFonts';
+const AppIcon = require('../../../assets/zwigato.jpg');
 
 const { width } = Dimensions.get('window');
 
@@ -53,7 +53,8 @@ const Header = ({ title, showBack = false, ShowWishlist = true, ShowCart = true 
           {ShowCart === true ? (
           <TouchableOpacity style={styles.iconBtn} onPress={() => router.navigate('/cart')}>
             {/* <Ionicons name="bag-outline" size={22} color={COLORS.iconColor} /> */}
-            <SimpleLineIcons name="bag" size={20} color={COLORS.iconColor} />
+            {/* <SimpleLineIcons name="bag" size={20} color={COLORS.iconColor} /> */}
+            <Ionicons name="bag-handle-outline" size={22} color="#282c3f" />   
             { cart && cart.length > 0 && (
               <View style={styles.badge}>
                 <Text style={styles.badgeText}>{ cart.length > 9 ? '9+' : cart.length }</Text>
@@ -103,21 +104,21 @@ const styles = StyleSheet.create({
   },
   rightRow: { flexDirection: 'row', alignItems: 'center' },
   iconBtn: { padding: 8, position: 'relative' },
-  badge: {
-    position: 'absolute',
-    top: 4,
-    right: 0,
-    backgroundColor: COLORS.primary,
-    borderRadius: 20,
-    minWidth: 16,
-    height: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // elevation: 5,
-    // zIndex: 100,
-  },
-  badgeText: { color: COLORS.white, fontSize: 10, fontFamily: BaseFonts.semiBold, },
-  dot: {
+    badge: {
+      position: 'absolute',
+      top: 4,
+      right: 0,
+      backgroundColor: COLORS.primary,
+      borderRadius: 20,
+      minWidth: 16,
+      height: 16,
+      justifyContent: 'center',
+      alignItems: 'center',
+      // elevation: 5,
+      // zIndex: 100,
+    },
+    badgeText: { color: COLORS.white, fontSize: 10, fontFamily: BaseFonts.semiBold, },
+    dot: {
     position: 'absolute',
     top: 10,
     right: 8,
