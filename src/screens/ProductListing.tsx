@@ -13,7 +13,8 @@ import ProductCard from '../components/modules/product/ProductCard';
 import { useRouter } from 'expo-router';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { BaseFonts } from '../constants/BaseFonts';
-import { useShop } from '@/context/ShopContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 import { COLORS } from '@/constants/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import SearchScreen from '../../app/search'; // 👈 Sahi relative path check kar lena bhai
@@ -96,7 +97,8 @@ const SUB_PILLS: Record<TabType, string[]> = {
 
 export default function ProductListing({ showBack = false, ShowWishlist = true, ShowCart = true  }) {
   const router = useRouter();
-  const { cart } = useShop();
+  const cart = useSelector((state: RootState) => state.shop.cart);
+  const favorites = useSelector((state: RootState) => state.shop.favorites);
   const [activeTab, setActiveTab] = useState<TabType>('ALL');
   const [currentSubCat, setCurrentSubCat] = useState<string>('Fashion');
   const [selectedPill, setSelectedPill] = useState<string>('Trending');
@@ -529,9 +531,26 @@ export default function ProductListing({ showBack = false, ShowWishlist = true, 
             <TouchableOpacity style={styles.iconBtn}>
               <Ionicons name="notifications-outline" size={22} color="#282c3f" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.iconBtn} onPress={() => router.navigate('/wishlist')}>
-              <Ionicons name="heart-outline" size={22} color="#282c3f" />
-            </TouchableOpacity>
+            {ShowWishlist === true ? (
+           <TouchableOpacity style={styles.iconBtn} onPress={() => router.navigate('/wishlist')}>
+  <Ionicons name="heart-outline" size={22} color="#282c3f" />
+  
+  {/* ✅ FIXED: Dashboard heart par bhi pink dot indicator lag gaya! */}
+  {favorites && favorites.length > 0 && (
+    <View style={{
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: 7,
+      height: 7,
+      backgroundColor: '#ff3f6c', // Premium Pink Color
+      borderRadius: 4,
+      borderWidth: .5,
+      borderColor: '#FFFFFF'
+    }} />
+  )}
+</TouchableOpacity>
+             ) : null}
             {ShowCart === true ? (
               <TouchableOpacity style={styles.iconBtn} onPress={() => router.navigate('/cart')}>
                 <Ionicons name="bag-handle-outline" size={22} color="#282c3f" />

@@ -1,16 +1,37 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions, Platform } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+// ── REDUX HOOKS & ACTIONS SYSTEM INTEGRATION ──
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, toggleFavorite } from '../../../store/slices/cartSlice';
 const { width } = Dimensions.get('window');
 // Dynamic width layout to render 2 items beautifully side-by-side
 const cardWidth = (width - 36) / 2; 
 
 const ProductCard = ({ product, onPress }) => {
+
+  const dispatch = useDispatch();
+  
+  // Check if item is already in wishlist to change heart icon color dynamically
+  const favorites = useSelector((state) => state.shop.favorites);
+  const isFavorite = favorites.some((item) => item.id === product.id);
   const isTopRated = product.rating >= 4.5;
   
   // Real E-commerce price equation calculation
   const calculatedOriginalPrice = Math.round((product.price * 80) / (1 - product.discountPercentage / 100));
+
+  const handleAddToCartPress = (e) => {
+    e.stopPropagation(); // Prevents navigating to details screen on button click
+    // ✅ Redux Action Dispatched Successfully!
+    dispatch(addToCart(product));
+    alert(`${product.title} added to bag!`);
+  };
+
+  const handleWishlistPress = (e) => {
+    e.stopPropagation();
+    // ✅ Redux Action Dispatched for Wishlist Trigger!
+    dispatch(toggleFavorite(product));
+  };
 
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.85}>
@@ -24,6 +45,16 @@ const ProductCard = ({ product, onPress }) => {
             <Text style={styles.badgeText}>BESTSELLER</Text>
           </View>
         )}
+
+        {/* ❤️ WISHLIST FLOATING ACTION EYE-CATCHER */}
+        <TouchableOpacity style={styles.heartActionBtn} onPress={handleWishlistPress}>
+          <MaterialCommunityIcons 
+            name={isFavorite ? "heart" : "heart-outline"} 
+            size={20} 
+            color={isFavorite ? "#ff3f6c" : "#282c3f"} 
+          />
+        </TouchableOpacity>
+
       </View>
 
       {/* 📝 PREMIUM DATA TEXT GRID */}
@@ -56,6 +87,13 @@ const ProductCard = ({ product, onPress }) => {
             {product.stock < 10 ? `Only ${product.stock} left!` : 'In Stock'}
           </Text>
         </View>
+
+{/* 🛒 PREMIUM ADD TO BAG TRIGGER BUTTON */}
+        <TouchableOpacity style={styles.addToBagBtn} onPress={handleAddToCartPress} activeOpacity={0.8}>
+          {/* <MaterialCommunityIcons name="bag-handle" size={14} color="#FFFFFF" style={{ marginRight: 6 }} /> */}
+           <Ionicons name="bag-handle-outline" size={14} color="#FFFFFF" style={{ marginRight: 6 }} /> 
+          <Text style={styles.addToBagText}>ADD TO BAG</Text>
+        </TouchableOpacity>
 
       </View>
     </TouchableOpacity>
@@ -114,7 +152,19 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     letterSpacing: 0.4,
   },
-  
+  heartActionBtn: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: '#FFFFFF',
+    padding: 6,
+    borderRadius: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    shadowOffset: { width: 0, height: 1 },
+  },
   // Bottom details area styles
   detailsContainer: {
     padding: 12,
@@ -183,4 +233,14 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '500',
   },
+  addToBagBtn: {
+    flexDirection: 'row',
+    backgroundColor: '#ff3f6c',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginTop: 6,
+  },
+  addToBagText: { color: '#FFFFFF', fontSize: 11, fontWeight: '700', letterSpacing: 0.3 },
 });

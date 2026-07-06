@@ -5,16 +5,16 @@
     "scheme": "zwigato-shop",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/zwigato.jpg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FFE450"
+      "backgroundColor": "#ff3f6c"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.afrazmirza.ZwigatoShop"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,9 +22,8 @@
         "backgroundColor": "#ffffff"
       },
       "splash": {
-        "image": "./assets/splash-icon.png",
         "resizeMode": "contain",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ff3f6c"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.afrazmirza.ZwigatoShop"
@@ -35,7 +34,8 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-splash-screen"
+      "expo-splash-screen",
+      "expo-secure-store"
     ],
     "extra": {
       "router": {},

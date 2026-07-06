@@ -1,12 +1,39 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { BaseFonts } from '@/constants/BaseFonts';
 import { useRouter } from 'expo-router';
+import * as SecureStore from "expo-secure-store";
 
 export default function ProfileScreen() {
   const router = useRouter();
+
+  const handleLogout = async () => {
+    Alert.alert(
+      "Log Out",
+      "Are you sure you want to log out from Zwigato?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Logout", 
+          style: "destructive",
+          onPress: async () => {
+            try {
+              // 👈 Token ko memory se permanently uda diya
+              await SecureStore.deleteItemAsync("authTokens");
+              console.log("User token deleted. Session closed.");
+              
+              // Wapas main route par bhej do ya login portal par
+              router.replace("/signIn");
+            } catch (error) {
+              console.error("Logout failed:", error);
+            }
+          }
+        }
+      ]
+    );
+  };
   return (
     <SafeAreaView style={styles.root} edges={['top', 'left', 'right']}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
@@ -67,7 +94,7 @@ export default function ProfileScreen() {
         </View>
 
         {/* LOGOUT BUTTON */}
-        <TouchableOpacity style={styles.logoutButton} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.logoutButton} activeOpacity={0.8} onPress={handleLogout}>
           <Ionicons name="log-out-outline" size={18} color="#ff3f6c" style={{ marginRight: 6 }} />
           <Text style={styles.logoutText}>LOG OUT</Text>
         </TouchableOpacity>
